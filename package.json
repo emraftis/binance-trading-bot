@@ -1,0 +1,17 @@
+{
+  "name": "binance-trading-bot",
+  "version": "1.0.0",
+  "description": "crypto trading bot on binance",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Evan Raftis",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "ccxt": "^1.55.59",
+    "dotenv": "^10.0.0"
+  }
+}
