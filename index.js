@@ -17,13 +17,13 @@ const getData = async function (symbol, timeframe) {
 
   // Gets 15m candle data from binance mainnet for a trailing 3 day period.
   const now = exchange.milliseconds();
-  const lengthOfTime = 60 * 60 * 24 * 1 * 1000;
+  const lengthOfTime = 60 * 60 * 24 * 0.25 * 1000;
   const since = now - lengthOfTime;
   const candleData = await exchange.fetch_ohlcv(
     `${symbol}/BUSD`,
     `${timeframe}`,
     since
-  ); // This returns an array called candleData[] with each array item being an array of [OHLCV values].
+  ); // returns an array called candleData[] with each array item being an array of [OHLCV values].
 
   //Establish a CURRENT AVERAGE PRICE based on 3-day, 1hr closing price data.
   const averagePrices = [];
@@ -39,7 +39,10 @@ const getData = async function (symbol, timeframe) {
   const currentActualPrice = currentActualPrices.bids[1][0];
   console.log(currentActualPrice);
 
-  //If the current price is below the average price calc'd above, BY A LARGE MARGIN (5%), we will buy, regardless of the buy 'cooldown'.
+  //Check Account balance for $BUSD and $ETH.
+  //
+
+  //If the current price is below the average price calc'd above, BY A LARGE MARGIN (3%), we will buy, regardless of the buy 'cooldown'.
   if (currentAvgPrice >= 1.03 * currentActualPrice) {
     console.log(`Buy without time restriction at ${currentActualPrice}`); //no time restriction, aka buy the dip!
     console.log(
@@ -62,10 +65,10 @@ const getData = async function (symbol, timeframe) {
     console.log(
       `Set limit sell at ${currentAvgPrice * 1.05} for 10% of ETH purchased`
     );
+  } else if (currentActualPrice > currentAvgPrice * 1.2) {
+    console.log("Market sell 20% of ETH holdings with timer");
   } else if (currentActualPrice > currentAvgPrice * 1.1) {
-    console.log("Market sell 10% of ETH holdings");
-  } else if (currentAvgPrice <= currentActualPrice) {
-    console.log("Just holding...");
+    console.log("Market sell 10% of ETH holdings with timer");
   }
 
   //*****Turns the client to the testnet.*****
