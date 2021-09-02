@@ -37,7 +37,7 @@ const getData = async function (symbol, timeframe) {
   //Get the first price in the orderBook (closest to bid/ask spread midpoint).
   const currentActualPrices = await exchange.fetch_order_book("ETH/BUSD");
   const currentActualPrice = currentActualPrices.bids[1][0];
-  console.log("Current Actual Price" + currentActualPrice);
+  console.log("Current Actual Price: " + currentActualPrice);
 
   //Check Account balance for $BUSD and $ETH.
   //
